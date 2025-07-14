@@ -67,7 +67,7 @@ export const generateBlogTitle = async (req, res) => {
     });
 
     const content = response.choices[0].message.content;
-    await sql`INSERT INTO creations (user_id, prompt, content, type) VALUES (${userId}, ${prompt}, ${content}, 'article')`;
+    await sql`INSERT INTO creations (user_id, prompt, content, type) VALUES (${userId}, ${prompt}, ${content}, 'blog_title')`;
 
     if (plan !== "premium") {
       await clerkClient.users.updateUserMetadata(userId, {
