@@ -40,21 +40,6 @@ const Community = () => {
                 <div className="flex gap-1 items-center">
                   <p>{creation.likes.length}</p>
                   <Heart
-                    onClick={() => {
-                      const updated = creations.map((item, idx) => {
-                        if (idx === index) {
-                          const hasLiked = item.likes.includes(user.id);
-                          return {
-                            ...item,
-                            likes: hasLiked
-                              ? item.likes.filter((id) => id !== user.id)
-                              : [...item.likes, user.id],
-                          };
-                        }
-                        return item;
-                      });
-                      setCreations(updated);
-                    }}
                     className={`min-w-5 h-5 hover:scale-110 cursor-pointer ${
                       creation.likes.includes(user.id)
                         ? "fill-red-500 text-red-600"
