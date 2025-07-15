@@ -116,7 +116,7 @@ export const generateImage = async (req, res) => {
     await sql`INSERT INTO creations (user_id, prompt, content, type, publish) VALUES (${userId}, ${prompt}, ${secure_url}, 'image', ${
       publish ?? false
     })`;
-    res.json({ success: true, secure_url });
+    res.json({ success: true, content: secure_url });
   } catch (error) {
     console.log(error.message);
     res.json({ success: false, message: error.message });
@@ -146,7 +146,7 @@ export const removeImageBackground = async (req, res) => {
     });
 
     await sql`INSERT INTO creations (user_id, prompt, content, type) VALUES (${userId}, 'Remove background from image', ${secure_url}, 'image')`;
-    res.json({ success: true, secure_url });
+    res.json({ success: true, content: secure_url });
   } catch (error) {
     console.log(error.message);
     res.json({ success: false, message: error.message });
@@ -157,7 +157,7 @@ export const removeImageObject = async (req, res) => {
   try {
     const { userId } = req.auth();
     const { object } = req.body;
-    const { image } = req.file;
+    const image = req.file;
     const plan = req.plan;
 
     if (plan !== "premium") {
@@ -174,7 +174,7 @@ export const removeImageObject = async (req, res) => {
     });
 
     await sql`INSERT INTO creations (user_id, prompt, content, type) VALUES (${userId}, ${`Removed ${object} from image`}, ${imageUrl}, 'image')`;
-    res.json({ success: true, imageUrl });
+    res.json({ success: true, content: imageUrl });
   } catch (error) {
     console.log(error.message);
     res.json({ success: false, message: error.message });
@@ -201,7 +201,7 @@ export const resumeReview = async (req, res) => {
       });
     }
 
-    const dataBuffer = fs.readdirSync(resume.path);
+    const dataBuffer = fs.readFileSync(resume.path);
     const pdfData = await pdf(dataBuffer);
 
     const prompt = `Review the following resume and provide constructive feedbacks on its strengths, weaknesses and potential areas for improvement. Resume Content:\n\n${pdfData.text}`;
