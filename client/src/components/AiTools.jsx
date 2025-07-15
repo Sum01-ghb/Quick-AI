@@ -22,7 +22,7 @@ const AiTools = () => {
         {AiToolsData.map((tool, index) => (
           <div
             key={index}
-            onClick={() => (user ? navigate(tool.path) : navigate("/sign-in"))}
+            onClick={() => (user ? navigate(tool.path) : navigate("/ai"))}
             className="p-8 m-4 max-w-xs rounded-lg bg-[#FDFDFE] shadow-lg border border-gray-100 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
           >
             <tool.Icon
