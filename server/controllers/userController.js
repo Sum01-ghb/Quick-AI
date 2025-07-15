@@ -24,7 +24,7 @@ export const getPublishedCreations = async (req, res) => {
 export const toggleLikeCreation = async (req, res) => {
   try {
     const { userId } = req.auth();
-    const { id } = req.body();
+    const { id } = req.body;
 
     const [creation] = await sql`SELECT * FROM creations WHERE id = ${id}`;
     if (!creation) {
